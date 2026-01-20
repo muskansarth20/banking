@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Banking Interface</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f6ff;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main container */
+        .bank-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        /* Balance display */
+        .balance {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #e8f0fe;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .balance span {
+            font-weight: bold;
+            color: #1a73e8;
+        }
+
+        /* Input */
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            flex: 1;
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .deposit {
+            background-color: #27ae60;
+        }
+
+        .withdraw {
+            background-color: #e74c3c;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* Message */
+        .message {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .bank-container {
+                margin: 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="bank-container">
+    <h2>Bank Account</h2>
+
+    <div class="balance">
+        <div>Balance:</div>
+        <span id="balance">₹ 1000</span>
+    </div>
+
+    <input type="number" id="amount" placeholder="Enter amount">
+
+    <div class="buttons">
+        <button class="deposit" onclick="deposit()">Deposit</button>
+        <button class="withdraw" onclick="withdraw()">Withdraw</button>
+    </div>
+
+    <div class="message" id="message"></div>
+</div>
+
+<script>
+    let balance = 1000;
+
+    function deposit() {
+        let amount = Number(document.getElementById("amount").value);
+        let message = document.getElementById("message");
+
+        if (amount <= 0) {
+            message.style.color = "red";
+            message.innerText = "Enter a valid deposit amount!";
+            return;
+        }
+
+        balance += amount;
+        updateBalance();
+        message.style.color = "green";
+        message.innerText = "Deposit successful!";
+    }
+
+    function withdraw() {
+        let amount = Number(document.getElementById("amount").value);
+        let message = document.getElementById("message");
+
+        if (amount <= 0) {
+            message.style.color = "red";
+            message.innerText = "Enter a valid withdrawal amount!";
+            return;
+        }
+
+        if (amount > balance) {
+            message.style.color = "red";
+            message.innerText = "Insufficient balance!";
+            return;
+        }
+
+        balance -= amount;
+        updateBalance();
+        message.style.color = "green";
+        message.innerText = "Withdrawal successful!";
+    }
+
+    function updateBalance() {
+        document.getElementById("balance").innerText = "₹ " + balance;
+        document.getElementById("amount").value = "";
+    }
+</script>
+
+</body>
+</html>
